@@ -1,4 +1,4 @@
-import { Bell, Menu, User, CalendarDays, Briefcase, CheckCircle2, ChevronRight, TrendingUp, CalendarPlus, Clock3, ClipboardList, Star, Trophy } from 'lucide-react'
+import { Bell, Menu, User, CalendarDays, Briefcase, CheckCircle2, ChevronRight, TrendingUp, CalendarPlus, Clock3, ClipboardList, Star, Megaphone, Trophy } from 'lucide-react'
 import { StatusBar, WavyBackground } from '../components/shared'
 import { useNav } from '../context/NavContext'
 
@@ -51,14 +51,14 @@ export default function HomePage(){
               {icon:<Briefcase    size={17} className="text-amber-500"/>, bg:'bg-amber-100', v:2,  label:'Ongoing Service',   sub:'In progress', screen:'ongoing-service'},
               {icon:<CheckCircle2 size={17} className="text-green-500"/>, bg:'bg-green-100', v:15, label:'Service Completed', sub:'This month',  screen:'completed-service'},
             ].map(c=>(
-              <button key={c.label} onClick={()=>c.screen==='bookings'?setActiveTab('bookings'):navigate(c.screen as any)} className="flex-1 glass rounded-2xl p-3.5 shadow-sm flex flex-col gap-2.5 text-left">
+              <button key={c.label} onClick={()=>c.screen==='bookings'?setActiveTab('bookings'):navigate(c.screen as any)} className="relative flex-1 glass rounded-2xl px-3.5 py-2.5 shadow-sm flex flex-col gap-1.5 text-left">
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${c.bg}`}>{c.icon}</div>
                 <div>
                   <p className="text-[22px] font-bold text-gray-900 leading-tight">{c.v}</p>
                   <p className="text-[11px] font-semibold text-gray-700 mt-0.5 leading-tight">{c.label}</p>
                   <p className="text-[10px] text-gray-400 mt-0.5">{c.sub}</p>
                 </div>
-                <div className="flex justify-end mt-auto"><ChevronRight size={14} className="text-gray-300"/></div>
+                <ChevronRight size={14} className="absolute bottom-2.5 right-3 text-gray-300"/>
               </button>
             ))}
           </div>
@@ -93,12 +93,30 @@ export default function HomePage(){
                 {icon:<Star          size={17} className="text-amber-500"/> ,bg:'bg-amber-100' ,label:'Reviews'         ,screen:'reviews'},
               ].map(c=>(
                 <button key={c.label} onClick={()=>navigate(c.screen as any)} className="flex-1 glass rounded-2xl p-3.5 shadow-sm flex flex-col items-start gap-2 active:scale-95 transition-transform duration-150">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${c.bg}`}>{c.icon}</div>
+                  <div className={`mx-auto w-9 h-9 rounded-xl flex items-center justify-center ${c.bg}`}>{c.icon}</div>
                   <div className="flex items-center justify-between w-full"><p className="text-[11px] font-semibold text-gray-700 leading-tight">{c.label}</p><ChevronRight size={12} className="text-gray-300"/></div>
                 </button>
               ))}
             </div>
           </div>
+          {/* Offers promo */}
+          <button onClick={()=>navigate('offers')} className="w-full overflow-hidden rounded-2xl bg-gradient-to-r from-rose-500 to-orange-400 p-4 shadow-sm text-left text-white active:scale-[0.99] transition-transform duration-150">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                <Megaphone size={22}/>
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <p className="text-[14px] font-bold">Promote your services</p>
+                  <span className="px-2 py-0.5 rounded-full bg-white/20 text-[9px] font-bold">NEW</span>
+                </div>
+                <p className="text-[11px] text-white/80 mt-0.5 leading-snug">Create offers and boost visibility on the customer app.</p>
+              </div>
+              <span className="shrink-0 flex items-center gap-1 rounded-xl bg-white px-3 py-2 text-[11px] font-bold text-rose-500">
+                Create <ChevronRight size={13}/>
+              </span>
+            </div>
+          </button>
           {/* Performance */}
           <button onClick={()=>navigate('performance')} className="w-full bg-blue-50/80 rounded-2xl p-4 flex items-center gap-3 text-left">
             <div className="w-14 h-14 rounded-full bg-blue-200/60 flex items-center justify-center shrink-0 relative">

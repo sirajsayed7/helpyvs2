@@ -6,7 +6,7 @@ export type Screen =
   | 'reviews' | 'new-booking' | 'withdraw' | 'all-transactions' | 'pending-payout'
   | 'personal-info' | 'business-info' | 'services-list' | 'documents' | 'bank-details'
   | 'notification-settings' | 'availability-settings' | 'privacy-security'
-  | 'profile-guide' | 'performance'
+  | 'profile-guide' | 'performance' | 'ongoing-service' | 'completed-service' | 'offers'
 
 interface NavState { screen: Screen; params?: any; history: { screen: Screen; params?: any }[] }
 interface NavCtx {
