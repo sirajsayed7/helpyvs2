@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import {
   ArrowLeft,
   BadgePercent,
@@ -41,7 +41,7 @@ const ACTIVE_OFFERS = [
 ]
 
 export default function OffersPage() {
-  const { goBack } = useNav()
+  const { goBack, params } = useNav()
   const scrollRef = useRef<HTMLDivElement>(null)
   const [offerType, setOfferType] = useState<'discount' | 'fixed'>('discount')
   const [service, setService] = useState(SERVICES[0])
@@ -49,9 +49,17 @@ export default function OffersPage() {
   const [serviceMenuOpen, setServiceMenuOpen] = useState(false)
   const [durationMenuOpen, setDurationMenuOpen] = useState(false)
 
-  useEffect(() => {
-    scrollRef.current?.scrollTo({ top: 0, behavior: 'auto' })
-  }, [])
+  useLayoutEffect(() => {
+    const scrollToTop = () => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = 0
+      }
+      window.scrollTo(0, 0)
+    }
+
+    scrollToTop()
+    requestAnimationFrame(scrollToTop)
+  }, [params?.scrollToTop])
 
   return (
     <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">

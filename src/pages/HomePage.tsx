@@ -100,7 +100,7 @@ export default function HomePage(){
             </div>
           </div>
           {/* Offers promo */}
-          <button onClick={()=>navigate('offers')} className="w-full overflow-hidden rounded-2xl bg-gradient-to-r from-rose-500 to-orange-400 p-4 shadow-sm text-left text-white active:scale-[0.99] transition-transform duration-150">
+          <button onClick={()=>navigate('offers', { scrollToTop: Date.now() })} className="w-full overflow-hidden rounded-2xl bg-gradient-to-r from-rose-500 to-orange-400 p-4 shadow-sm text-left text-white active:scale-[0.99] transition-transform duration-150">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
                 <Megaphone size={22}/>
