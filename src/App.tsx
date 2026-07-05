@@ -16,6 +16,8 @@ import AvailabilityPage   from './subpages/AvailabilityPage'
 import ManageServicesPage from './subpages/ManageServicesPage'
 import ReviewsPage        from './subpages/ReviewsPage'
 import OffersPage         from './subpages/OffersPage'
+import OfferPaymentPage   from './subpages/OfferPaymentPage'
+import OfferSuccessPage   from './subpages/OfferSuccessPage'
 import WithdrawPage       from './subpages/WithdrawPage'
 import AllTransactionsPage from './subpages/AllTransactionsPage'
 import PerformancePage    from './subpages/PerformancePage'
@@ -53,6 +55,8 @@ function AppShell() {
       case 'services-list':         return <ServicesListPage/>
       case 'reviews':               return <ReviewsPage/>
       case 'offers':                return <OffersPage/>
+      case 'offer-payment':         return <OfferPaymentPage/>
+      case 'offer-success':         return <OfferSuccessPage/>
       case 'withdraw':              return <WithdrawPage/>
       case 'all-transactions':      return <AllTransactionsPage/>
       case 'pending-payout':        return <PendingPayoutPage/>
