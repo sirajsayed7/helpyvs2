@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   ArrowLeft,
   BadgePercent,
@@ -42,11 +42,16 @@ const ACTIVE_OFFERS = [
 
 export default function OffersPage() {
   const { goBack } = useNav()
+  const scrollRef = useRef<HTMLDivElement>(null)
   const [offerType, setOfferType] = useState<'discount' | 'fixed'>('discount')
   const [service, setService] = useState(SERVICES[0])
   const [duration, setDuration] = useState('7 days')
   const [serviceMenuOpen, setServiceMenuOpen] = useState(false)
   const [durationMenuOpen, setDurationMenuOpen] = useState(false)
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0, behavior: 'auto' })
+  }, [])
 
   return (
     <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
@@ -66,7 +71,7 @@ export default function OffersPage() {
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-500 to-indigo-600 px-4 py-3.5 text-white shadow-sm">
           <div className="absolute -right-7 -top-9 w-24 h-24 rounded-full bg-white/10" />
           <div className="absolute right-8 bottom-4 w-11 h-11 rounded-full bg-white/10" />
