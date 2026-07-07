@@ -23,6 +23,9 @@ type OfferType = 'discount' | 'fixed'
 const SERVICES = ['General Cleaning', 'Deep Cleaning', 'Move-in / Move-out', 'Office Cleaning', 'Sofa Cleaning']
 const EVENTS = ['Eid Home Refresh', 'Wedding Cleanup', 'Corporate Event Cleaning', 'Ramadan Preparation', 'Move-in Weekend']
 const DURATION_OPTIONS = ['3 days', '7 days', '14 days', '30 days']
+const PROMO_RATE_PER_DAY = 19
+
+const daysFromDuration = (duration: string) => Number(duration.split(' ')[0]) || 0
 
 const ACTIVE_OFFERS = [
   { title: 'Weekend Deep Clean', kind: 'Service', target: 'Deep Cleaning', deal: '20% OFF', price: '224 QR', daysLeft: 5, bookings: 9 },
@@ -84,11 +87,12 @@ export default function OffersPage() {
   const [target, setTarget] = useState(SERVICES[0])
   const [duration, setDuration] = useState('7 days')
   const [dealValue, setDealValue] = useState('20')
-  const [promoFee, setPromoFee] = useState('199')
   const [targetMenuOpen, setTargetMenuOpen] = useState(false)
   const [durationMenuOpen, setDurationMenuOpen] = useState(false)
 
   const targetOptions = promotionKind === 'service' ? SERVICES : EVENTS
+  const durationDays = daysFromDuration(duration)
+  const promoFee = String(durationDays * PROMO_RATE_PER_DAY)
   const dealLabel = offerType === 'discount' ? `${dealValue || 0}% OFF` : `${dealValue || 0} QR`
 
   const offerDraft = {
@@ -111,7 +115,6 @@ export default function OffersPage() {
     setTarget(SERVICES[0])
     setDuration('7 days')
     setDealValue('20')
-    setPromoFee('199')
     scrollRef.current?.scrollTo({ top: 0 })
   }
 
@@ -294,21 +297,17 @@ export default function OffersPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div>
               <label className="block">
                 <span className="text-[11px] font-bold text-gray-500">{offerType === 'discount' ? 'Discount' : 'Offer price'}</span>
-                <div className="mt-1 flex items-center rounded-2xl bg-gray-50 border border-gray-100 px-4 py-3">
+                <div className="mt-1 flex items-center rounded-2xl bg-gray-50 border border-gray-100 px-4 py-3.5">
                   <input value={dealValue} onChange={e => setDealValue(e.target.value)} className="w-full bg-transparent text-[14px] font-bold text-gray-900 outline-none" />
                   <span className="text-[12px] font-bold text-gray-400">{offerType === 'discount' ? '%' : 'QR'}</span>
                 </div>
               </label>
-              <label className="block">
-                <span className="text-[11px] font-bold text-gray-500">Promo fee</span>
-                <div className="mt-1 flex items-center rounded-2xl bg-gray-50 border border-gray-100 px-4 py-3">
-                  <input value={promoFee} onChange={e => setPromoFee(e.target.value)} className="w-full bg-transparent text-[14px] font-bold text-gray-900 outline-none" />
-                  <span className="text-[12px] font-bold text-gray-400">QR</span>
-                </div>
-              </label>
+              <p className="text-[10px] text-gray-400 mt-1.5">
+                Promotion cost is calculated separately at {PROMO_RATE_PER_DAY} QR/day when you continue.
+              </p>
             </div>
           </div>
         </div>
@@ -347,7 +346,7 @@ export default function OffersPage() {
 
         <button onClick={() => navigate('offer-payment', offerDraft)} className="w-full bg-brand-500 text-white rounded-2xl py-4 shadow-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
           <CreditCard size={18} />
-          <span className="text-[14px] font-bold">Pay {promoFee || 199} QR to Promote</span>
+          <span className="text-[14px] font-bold">Pay {promoFee} QR to Promote</span>
         </button>
 
         <div>

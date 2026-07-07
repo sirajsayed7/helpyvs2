@@ -2,6 +2,10 @@ import { ArrowLeft, CalendarDays, CheckCircle2, CreditCard, Megaphone, PartyPopp
 import { StatusBar } from '../components/shared'
 import { useNav } from '../context/NavContext'
 
+const PROMO_RATE_PER_DAY = 19
+
+const daysFromDuration = (duration: string) => Number(duration.split(' ')[0]) || 0
+
 const DEFAULT_OFFER = {
   promotionKind: 'service',
   title: 'Summer Cleaning Deal',
@@ -9,13 +13,14 @@ const DEFAULT_OFFER = {
   target: 'General Cleaning',
   duration: '7 days',
   dealLabel: '20% OFF',
-  promoFee: '199',
+  promoFee: '133',
 }
 
 export default function OfferPaymentPage() {
   const { goBack, navigate, params } = useNav()
   const offer = { ...DEFAULT_OFFER, ...(params || {}) }
   const isEvent = offer.promotionKind === 'event'
+  const durationDays = daysFromDuration(offer.duration)
 
   return (
     <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
@@ -71,8 +76,12 @@ export default function OfferPaymentPage() {
               <span className="text-[13px] font-bold text-gray-900">{offer.promoFee} QR</span>
             </div>
             <div className="flex items-center justify-between">
+              <span className="text-[12px] text-gray-500">Rate</span>
+              <span className="text-[13px] font-bold text-gray-900">{PROMO_RATE_PER_DAY} QR/day</span>
+            </div>
+            <div className="flex items-center justify-between">
               <span className="text-[12px] text-gray-500">Duration</span>
-              <span className="text-[13px] font-bold text-gray-900">{offer.duration}</span>
+              <span className="text-[13px] font-bold text-gray-900">{durationDays} days</span>
             </div>
             <div className="flex items-center justify-between pt-3 border-t border-gray-100">
               <span className="text-[13px] font-bold text-gray-900">Total</span>
