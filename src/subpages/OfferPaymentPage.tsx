@@ -1,10 +1,9 @@
-import { ArrowLeft, CalendarDays, CheckCircle2, CreditCard, Megaphone, PartyPopper, ShieldCheck, Sparkles } from 'lucide-react'
+import { ArrowLeft, CalendarDays, CheckCircle2, CreditCard, FileImage, LayoutTemplate, Megaphone, PartyPopper, ShieldCheck, Sparkles, Wand2 } from 'lucide-react'
 import { StatusBar } from '../components/shared'
 import { useNav } from '../context/NavContext'
 
-const PROMO_RATE_PER_DAY = 19
-
-const daysFromDuration = (duration: string) => Number(duration.split(' ')[0]) || 0
+const OFFER_RATE_PER_DAY = 19
+const BANNER_RATE_PER_WEEK = 199
 
 const DEFAULT_OFFER = {
   promotionKind: 'service',
@@ -14,13 +13,23 @@ const DEFAULT_OFFER = {
   duration: '7 days',
   dealLabel: '20% OFF',
   promoFee: '133',
+  bannerCreativeMode: 'upload',
+  bannerFileName: '',
+  bannerDesignBrief: 'Create a clean homepage banner for a trusted cleaning service in Qatar, using a bright city-service feel and clear booking CTA.',
+  ctaLabel: 'Book Now',
 }
+
+const numberFromDuration = (duration: string) => Number(duration.split(' ')[0]) || 0
 
 export default function OfferPaymentPage() {
   const { goBack, navigate, params } = useNav()
   const offer = { ...DEFAULT_OFFER, ...(params || {}) }
   const isEvent = offer.promotionKind === 'event'
-  const durationDays = daysFromDuration(offer.duration)
+  const isBanner = offer.promotionKind === 'banner'
+  const durationUnits = numberFromDuration(offer.duration)
+  const isUpload = offer.bannerCreativeMode !== 'request'
+  const creativeLabel = isUpload ? 'Uploaded banner image' : 'Requested banner design'
+  const creativeDetail = isUpload ? offer.bannerFileName || 'Image pending upload' : offer.bannerDesignBrief
 
   return (
     <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
@@ -31,7 +40,7 @@ export default function OfferPaymentPage() {
         </button>
         <div>
           <h1 className="text-[18px] font-bold text-gray-900">Review & Pay</h1>
-          <p className="text-[11px] text-gray-400">Confirm promotion details</p>
+          <p className="text-[11px] text-gray-400">{isBanner ? 'Reserve homepage banner placement' : 'Confirm promotion details'}</p>
         </div>
       </div>
 
@@ -39,50 +48,83 @@ export default function OfferPaymentPage() {
         <div className="bg-white rounded-3xl shadow-sm p-4">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center">
-              {isEvent ? <PartyPopper size={22} className="text-brand-500" /> : <Megaphone size={22} className="text-brand-500" />}
+              {isBanner ? <LayoutTemplate size={22} className="text-brand-500" /> : isEvent ? <PartyPopper size={22} className="text-brand-500" /> : <Megaphone size={22} className="text-brand-500" />}
             </div>
             <div>
-              <p className="text-[15px] font-bold text-gray-900">{offer.title}</p>
-              <p className="text-[11px] text-gray-400">{isEvent ? 'Event promotion' : 'Service offer'} · {offer.target}</p>
+              <p className="text-[15px] font-bold text-gray-900">{isBanner ? creativeLabel : offer.title}</p>
+              <p className="text-[11px] text-gray-400">
+                {isBanner ? 'Homepage banner advert' : isEvent ? 'Event promotion' : 'Service offer'} · {offer.target}
+              </p>
             </div>
           </div>
 
-          <div className="rounded-3xl border border-gray-100 bg-gradient-to-br from-amber-50 to-white p-4">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-amber-100 flex items-center justify-center">
-                  {isEvent ? <PartyPopper size={18} className="text-amber-500" /> : <Sparkles size={18} className="text-amber-500" />}
-                </div>
+          {isBanner ? (
+            <div className="rounded-3xl border border-sky-100 bg-gradient-to-br from-slate-50 via-sky-50 to-amber-50 p-4">
+              <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-[13px] font-bold text-gray-900">Customer app preview</p>
-                  <p className="text-[11px] text-gray-500 mt-0.5">{offer.target}</p>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-500">Homepage banner preview</p>
+                  <p className="mt-2 text-[22px] font-bold leading-tight text-slate-900">{creativeLabel}</p>
+                  <p className="mt-2 max-w-[220px] text-[12px] leading-relaxed text-slate-600">{creativeDetail}</p>
+                </div>
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-3xl bg-brand-100/70">
+                  {isUpload ? <FileImage size={24} className="text-brand-500" /> : <Wand2 size={24} className="text-brand-500" />}
                 </div>
               </div>
-              <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-600 text-[10px] font-bold">{offer.dealLabel}</span>
+              <div className="mt-4 flex items-center justify-between border-t border-white/80 pt-3">
+                <span className="rounded-full bg-brand-500 px-3 py-2 text-[11px] font-bold text-white">{offer.ctaLabel}</span>
+                <span className="text-[11px] font-semibold text-slate-500">{offer.duration}</span>
+              </div>
             </div>
-            <p className="text-[12px] text-gray-500 leading-relaxed mt-3">{offer.description}</p>
-            <div className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 mt-4 pt-3 border-t border-amber-100">
-              <CalendarDays size={13} />
-              Runs for {offer.duration}
+          ) : (
+            <div className="rounded-3xl border border-gray-100 bg-gradient-to-br from-amber-50 to-white p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-amber-100 flex items-center justify-center">
+                    {isEvent ? <PartyPopper size={18} className="text-amber-500" /> : <Sparkles size={18} className="text-amber-500" />}
+                  </div>
+                  <div>
+                    <p className="text-[13px] font-bold text-gray-900">Customer app preview</p>
+                    <p className="text-[11px] text-gray-500 mt-0.5">{offer.target}</p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-600 text-[10px] font-bold">{offer.dealLabel}</span>
+              </div>
+              <p className="text-[12px] text-gray-500 leading-relaxed mt-3">{offer.description}</p>
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 mt-4 pt-3 border-t border-amber-100">
+                <CalendarDays size={13} />
+                Runs for {offer.duration}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="bg-white rounded-3xl shadow-sm p-4">
           <p className="text-[15px] font-bold text-gray-900">Payment summary</p>
           <div className="space-y-3 mt-4">
             <div className="flex items-center justify-between">
-              <span className="text-[12px] text-gray-500">Promotion fee</span>
+              <span className="text-[12px] text-gray-500">{isBanner ? 'Banner reservation fee' : 'Promotion fee'}</span>
               <span className="text-[13px] font-bold text-gray-900">{offer.promoFee} QR</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-[12px] text-gray-500">Rate</span>
-              <span className="text-[13px] font-bold text-gray-900">{PROMO_RATE_PER_DAY} QR/day</span>
+              <span className="text-[13px] font-bold text-gray-900">{isBanner ? `${BANNER_RATE_PER_WEEK} QR/week` : `${OFFER_RATE_PER_DAY} QR/day`}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-[12px] text-gray-500">Duration</span>
-              <span className="text-[13px] font-bold text-gray-900">{durationDays} days</span>
+              <span className="text-[12px] text-gray-500">{isBanner ? 'Duration' : 'Duration'}</span>
+              <span className="text-[13px] font-bold text-gray-900">{durationUnits} {isBanner ? 'week' : 'day'}{durationUnits > 1 ? 's' : ''}</span>
             </div>
+            {isBanner && (
+              <div className="flex items-center justify-between">
+                <span className="text-[12px] text-gray-500">Creative</span>
+                <span className="text-[13px] font-bold text-gray-900">{isUpload ? 'Vendor uploaded' : 'Design requested'}</span>
+              </div>
+            )}
+            {isBanner && (
+              <div className="flex items-center justify-between">
+                <span className="text-[12px] text-gray-500">Placement</span>
+                <span className="text-[13px] font-bold text-gray-900">Customer homepage banner</span>
+              </div>
+            )}
             <div className="flex items-center justify-between pt-3 border-t border-gray-100">
               <span className="text-[13px] font-bold text-gray-900">Total</span>
               <span className="text-[18px] font-bold text-brand-500">{offer.promoFee} QR</span>
@@ -104,7 +146,9 @@ export default function OfferPaymentPage() {
           </button>
           <div className="mt-3 flex items-center gap-2 rounded-2xl bg-green-50 px-3 py-2">
             <ShieldCheck size={15} className="text-green-500" />
-            <p className="text-[11px] text-green-600 font-semibold">Secure payment. Promotion starts after confirmation.</p>
+            <p className="text-[11px] text-green-600 font-semibold">
+              {isBanner ? 'Secure payment. Banner goes live once approval is confirmed.' : 'Secure payment. Promotion starts after confirmation.'}
+            </p>
           </div>
         </div>
 

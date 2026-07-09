@@ -7,7 +7,7 @@ export type Screen =
   | 'personal-info' | 'business-info' | 'services-list' | 'documents' | 'bank-details'
   | 'notification-settings' | 'availability-settings' | 'privacy-security'
   | 'profile-guide' | 'performance' | 'ongoing-service' | 'completed-service' | 'offers'
-  | 'offer-payment' | 'offer-success'
+  | 'offer-approval' | 'offer-payment' | 'offer-success'
 
 interface NavState { screen: Screen; params?: any; history: { screen: Screen; params?: any }[] }
 interface NavCtx {
