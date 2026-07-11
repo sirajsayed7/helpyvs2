@@ -100,7 +100,7 @@ export default function HomePage(){
             </div>
           </div>
           {/* Offers promo */}
-          <button onClick={()=>navigate('offers', { scrollToTop: Date.now() })} className="w-full overflow-hidden rounded-2xl bg-gradient-to-r from-rose-500 to-orange-400 p-4 shadow-sm text-left text-white active:scale-[0.99] transition-transform duration-150">
+          <button onClick={()=>navigate('offers', { scrollToTop: Date.now() })} className="w-full overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 p-4 shadow-sm text-left text-white active:scale-[0.99] transition-transform duration-150">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
                 <Megaphone size={22}/>
@@ -112,7 +112,7 @@ export default function HomePage(){
                 </div>
                 <p className="text-[11px] text-white/80 mt-0.5 leading-snug">Create offers and boost visibility on the customer app.</p>
               </div>
-              <span className="shrink-0 flex items-center gap-1 rounded-xl bg-white px-3 py-2 text-[11px] font-bold text-rose-500">
+              <span className="shrink-0 flex items-center gap-1 rounded-xl bg-white px-3 py-2 text-[11px] font-bold text-blue-600">
                 Create <ChevronRight size={13}/>
               </span>
             </div>

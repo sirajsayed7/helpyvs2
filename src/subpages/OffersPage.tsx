@@ -13,7 +13,6 @@ import {
   LayoutTemplate,
   Megaphone,
   PartyPopper,
-  Plus,
   Sparkles,
   Tag,
   UploadCloud,
@@ -130,23 +129,6 @@ export default function OffersPage() {
     ctaLabel,
   }
 
-  const resetForm = () => {
-    setPromotionKind('service')
-    setOfferType('discount')
-    setTitle('Summer Cleaning Deal')
-    setDescription('Get a professional cleaning package at a limited-time promoted price. Ideal for apartments and family homes.')
-    setTarget(SERVICES[0])
-    setDuration('7 days')
-    setDealValue('20')
-    setBannerCreativeMode('upload')
-    setBannerFileName('')
-    setBannerDesignBrief('Create a clean homepage banner for a trusted cleaning service in Qatar, using a bright city-service feel and clear booking CTA.')
-    setCtaLabel('Book Now')
-    setTargetMenuOpen(false)
-    setDurationMenuOpen(false)
-    scrollRef.current?.scrollTo({ top: 0 })
-  }
-
   useLayoutEffect(() => {
     const scrollToTop = () => {
       if (scrollRef.current) scrollRef.current.scrollTop = 0
@@ -207,9 +189,6 @@ export default function OffersPage() {
             <p className="text-[11px] text-gray-400">Promote deals, events, and banners</p>
           </div>
         </div>
-        <button onClick={resetForm} className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500 text-white shadow-sm">
-          <Plus size={18} />
-        </button>
       </div>
 
       <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-4 pb-6">
