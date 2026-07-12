@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Search, SlidersHorizontal, CalendarDays, MapPin, MessageCircle, Eye, CheckCircle, X, ChevronRight, XCircle, Clock } from 'lucide-react'
 import { StatusBar } from '../components/shared'
 import { useNav } from '../context/NavContext'
 
 type BStatus = 'Confirmed'|'Pending'|'Completed'|'Cancelled'
-interface Booking { id:number;name:string;service:string;sColor:string;date:string;time:string;location:string;status:BStatus;online:boolean;av:string;tab:string;price:string }
+interface Booking { id:number;name:string;service:string;sColor:string;date:string;time:string;location:string;status:BStatus;online:boolean;av:string;tab:string;price:string;progress?:number }
 
 const ALL:Booking[]=[
   {id:1,name:'Aisha Al Thani',  service:'General Cleaning',   sColor:'bg-blue-100 text-blue-600',    date:'May 30, 2024',time:'12:00 PM',location:'Viva Bahriya, The Pearl-Qatar',status:'Confirmed',online:true, av:'A',tab:'upcoming',  price:'180.00'},
@@ -28,7 +28,7 @@ const TABS:Tab[]=['upcoming','inprogress','completed','cancelled']
 const TLABEL:Record<Tab,string>={upcoming:'Upcoming',inprogress:'In Progress',completed:'Completed',cancelled:'Cancelled'}
 const THEAD:Record<Tab,string>={upcoming:'Upcoming Bookings',inprogress:'In Progress',completed:'Completed Jobs',cancelled:'Cancelled Bookings'}
 
-function Card({b,tab}:{b:Booking;tab:Tab}){
+function Card({b,tab,onAccept}:{b:Booking;tab:Tab;onAccept:(booking:Booking)=>void}){
   const {navigate} = useNav()
   return(
     <div className="bg-white rounded-2xl shadow-sm p-4">
@@ -54,7 +54,7 @@ function Card({b,tab}:{b:Booking;tab:Tab}){
         <div className="flex gap-3 mt-4">
           <button onClick={()=>navigate('chat',b)} className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 text-gray-600 text-[13px] font-semibold"><MessageCircle size={15}/>Message</button>
           {b.status==='Pending'?(
-            <button onClick={()=>navigate('booking-detail',b)} className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-500 text-white text-[13px] font-semibold"><CheckCircle size={15}/>Accept Booking</button>
+            <button onClick={()=>onAccept(b)} className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-500 text-white text-[13px] font-semibold"><CheckCircle size={15}/>Accept Booking</button>
           ):tab==='completed'?(
             <button onClick={()=>navigate('booking-detail',b)} className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-500 text-white text-[13px] font-semibold"><Eye size={15}/>View Receipt</button>
           ):tab==='inprogress'?(
@@ -69,10 +69,16 @@ function Card({b,tab}:{b:Booking;tab:Tab}){
 }
 
 export default function BookingsPage(){
-  const {navigate}=useNav()
+  const {navigate,bookingTab,setBookingTab,bookingUpdates,updateBooking}=useNav()
   const [tab,setTab]=useState<Tab>('upcoming')
   const [banner,setBanner]=useState(true)
-  const list=ALL.filter(b=>b.tab===tab)
+  useEffect(()=>{ if(TABS.includes(bookingTab as Tab)) setTab(bookingTab as Tab) },[bookingTab])
+  const list=ALL.map(b=>({...b,...bookingUpdates[b.id]})).filter(b=>b.tab===tab)
+  const switchTab=(next:Tab)=>{setTab(next);setBookingTab(next)}
+  const acceptBooking=(booking:Booking)=>{
+    updateBooking(booking.id,{status:'Confirmed',tab:'inprogress',progress:-1})
+    switchTab('inprogress')
+  }
   return(
     <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
       <StatusBar/>
@@ -83,7 +89,7 @@ export default function BookingsPage(){
           <button onClick={()=>navigate('calendar')} className="relative w-9 h-9 bg-white rounded-xl shadow-sm flex items-center justify-center"><SlidersHorizontal size={17} className="text-gray-500"/><span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-brand-500"/></button>
         </div>
       </div>
-      <div className="px-4 mt-3"><div className="bg-gray-100 rounded-2xl p-1 flex gap-1">{TABS.map(t=><button key={t} onClick={()=>setTab(t)} className={`shrink-0 flex-1 py-2 rounded-xl text-[11px] font-semibold transition-all whitespace-nowrap ${tab===t?'bg-white text-brand-500 shadow-sm':'text-gray-500'}`}>{TLABEL[t]}</button>)}</div></div>
+      <div className="px-4 mt-3"><div className="bg-gray-100 rounded-2xl p-1 flex gap-1">{TABS.map(t=><button key={t} onClick={()=>switchTab(t)} className={`shrink-0 flex-1 py-2 rounded-xl text-[11px] font-semibold transition-all whitespace-nowrap ${tab===t?'bg-white text-brand-500 shadow-sm':'text-gray-500'}`}>{TLABEL[t]}</button>)}</div></div>
       <div className="flex-1 overflow-y-auto px-4 pt-4 pb-4 space-y-4">
         <div className="flex items-center justify-between px-0.5">
           <p className="text-[15px] font-bold text-gray-900">{THEAD[tab]}</p>
@@ -91,7 +97,7 @@ export default function BookingsPage(){
           {tab==='cancelled'&&<span className="text-[12px] text-red-400 font-semibold">{list.length} bookings</span>}
         </div>
         {list.length===0&&<div className="flex flex-col items-center justify-center py-16 gap-3"><div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center"><CalendarDays size={28} className="text-gray-300"/></div><p className="text-[15px] font-semibold text-gray-400">No bookings here</p></div>}
-        {list.map(b=><Card key={b.id} b={b} tab={tab}/>)}
+        {list.map(b=><Card key={b.id} b={b} tab={tab} onAccept={acceptBooking}/>)}
         {tab==='upcoming'&&banner&&(
           <div className="bg-blue-50 rounded-2xl p-4 flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center shrink-0 relative"><CalendarDays size={20} className="text-brand-500"/><span className="absolute -top-1 -right-1 text-xs">✨</span></div>

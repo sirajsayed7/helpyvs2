@@ -7,7 +7,7 @@ export type Screen =
   | 'personal-info' | 'business-info' | 'services-list' | 'documents' | 'bank-details'
   | 'notification-settings' | 'availability-settings' | 'privacy-security'
   | 'profile-guide' | 'performance' | 'ongoing-service' | 'completed-service' | 'offers'
-  | 'offer-approval' | 'offer-payment' | 'offer-success'
+  | 'offer-approval' | 'offer-payment' | 'offer-success' | 'completion-evidence'
 
 interface NavState { screen: Screen; params?: any; history: { screen: Screen; params?: any }[] }
 interface NavCtx {
@@ -17,6 +17,10 @@ interface NavCtx {
   canGoBack: boolean
   activeTab: string
   setActiveTab: (t: string) => void
+  bookingTab: string
+  setBookingTab: (t: string) => void
+  bookingUpdates: Record<number, Record<string, any>>
+  updateBooking: (id: number, changes: Record<string, any>) => void
 }
 
 const Ctx = createContext<NavCtx>(null as any)
@@ -24,6 +28,8 @@ const Ctx = createContext<NavCtx>(null as any)
 export function NavProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<NavState>({ screen: 'home', history: [] })
   const [activeTab, setActiveTabState] = useState('home')
+  const [bookingTab, setBookingTab] = useState('upcoming')
+  const [bookingUpdates, setBookingUpdates] = useState<Record<number, Record<string, any>>>({})
 
   const navigate = (screen: Screen, params?: any) =>
     setState(s => ({ screen, params, history: [...s.history, { screen: s.screen, params: s.params }] }))
@@ -40,8 +46,11 @@ export function NavProvider({ children }: { children: ReactNode }) {
     setState({ screen: t as Screen, params: undefined, history: [] })
   }
 
+  const updateBooking = (id: number, changes: Record<string, any>) =>
+    setBookingUpdates(current => ({ ...current, [id]: { ...current[id], ...changes } }))
+
   return (
-    <Ctx.Provider value={{ screen: state.screen, params: state.params, navigate, goBack, canGoBack: state.history.length > 0, activeTab, setActiveTab }}>
+    <Ctx.Provider value={{ screen: state.screen, params: state.params, navigate, goBack, canGoBack: state.history.length > 0, activeTab, setActiveTab, bookingTab, setBookingTab, bookingUpdates, updateBooking }}>
       {children}
     </Ctx.Provider>
   )

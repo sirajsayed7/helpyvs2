@@ -29,6 +29,7 @@ import {
 } from './subpages/ProfileSubPages'
 import NewBookingPage     from './subpages/NewBookingPage'
 import OngoingServicePage from './subpages/OngoingServicePage'
+import CompletionEvidencePage from './subpages/CompletionEvidencePage'
 import CompletedServicePage from './subpages/CompletedServicePage'
 import NotificationsPage  from './subpages/NotificationsPage'
 import ServicesListPage   from './subpages/ServicesListPage'
@@ -72,24 +73,27 @@ function AppShell() {
       case 'profile-guide':         return <ProfileGuidePage/>
       case 'new-booking':           return <NewBookingPage/>
       case 'ongoing-service':       return <OngoingServicePage/>
+      case 'completion-evidence':   return <CompletionEvidencePage/>
       case 'completed-service':     return <CompletedServicePage/>
       default:                      return <HomePage/>
     }
   }
 
   return (
-    <div className="min-h-screen flex items-start justify-center" style={{background:'#d0e8ff'}}>
-      <div className="relative w-full max-w-[430px] min-h-screen flex flex-col overflow-hidden shadow-2xl" style={{background:'#EBF5FF'}}>
+    <div className="h-[100dvh] flex items-start justify-center overflow-hidden" style={{background:'#d0e8ff'}}>
+      <div className="relative w-full max-w-[430px] h-[100dvh] min-h-0 flex flex-col overflow-hidden shadow-2xl" style={{background:'#EBF5FF'}}>
         {/* Page content — grows, scrolls internally */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
           {renderScreen()}
         </div>
         {/* FROZEN bottom nav — always visible */}
-        <BottomNav
-          active={activeTab}
-          onChange={setActiveTab}
-          msgBadge={3}
-        />
+        <div className="shrink-0 relative z-50">
+          <BottomNav
+            active={activeTab}
+            onChange={setActiveTab}
+            msgBadge={3}
+          />
+        </div>
       </div>
     </div>
   )

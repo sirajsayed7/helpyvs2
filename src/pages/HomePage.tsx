@@ -11,11 +11,11 @@ const linePath=pts.map((p,i)=>{if(i===0)return`M ${p.x},${p.y}`;const pr=pts[i-1
 const areaPath=linePath+` L ${pts[pts.length-1].x},${H-PY} L ${pts[0].x},${H-PY} Z`
 
 export default function HomePage(){
-  const {navigate, setActiveTab} = useNav()
+  const {navigate, setActiveTab, setBookingTab} = useNav()
   return(
-    <div className="relative flex flex-col flex-1 overflow-hidden">
+    <div className="relative flex flex-col flex-1 min-h-0 overflow-hidden">
       <WavyBackground/>
-      <div className="relative flex flex-col flex-1" style={{zIndex:1}}>
+      <div className="relative flex flex-col flex-1 min-h-0" style={{zIndex:1}}>
         <StatusBar/>
         <div className="flex items-center justify-between px-5 pt-1 pb-3">
           <button className="w-10 h-10 glass rounded-xl shadow-sm flex items-center justify-center"><Menu size={20} className="text-gray-600"/></button>
@@ -30,7 +30,7 @@ export default function HomePage(){
             </button>
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-4">
+        <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4 space-y-4">
           <div className="px-1 pt-1 pb-1">
             <p className="text-[14px] text-gray-500 font-medium">Good morning, Ahmed 👋</p>
             <h1 className="text-[26px] font-bold text-gray-900 leading-snug mt-0.5">Let's get more<br/>bookings today!</h1>
@@ -51,7 +51,7 @@ export default function HomePage(){
               {icon:<Briefcase    size={17} className="text-amber-500"/>, bg:'bg-amber-100', v:2,  label:'Ongoing Service',   sub:'In progress', screen:'ongoing-service'},
               {icon:<CheckCircle2 size={17} className="text-green-500"/>, bg:'bg-green-100', v:15, label:'Service Completed', sub:'This month',  screen:'completed-service'},
             ].map(c=>(
-              <button key={c.label} onClick={()=>c.screen==='bookings'?setActiveTab('bookings'):navigate(c.screen as any)} className="relative flex-1 glass rounded-2xl px-3.5 py-2.5 shadow-sm flex flex-col gap-1.5 text-left">
+              <button key={c.label} onClick={()=>c.screen==='bookings'?(setBookingTab('upcoming'),setActiveTab('bookings')):c.screen==='ongoing-service'?(setBookingTab('inprogress'),setActiveTab('bookings')):navigate(c.screen as any)} className="relative flex-1 glass rounded-2xl px-3.5 py-2.5 shadow-sm flex flex-col gap-1.5 text-left">
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${c.bg}`}>{c.icon}</div>
                 <div>
                   <p className="text-[22px] font-bold text-gray-900 leading-tight">{c.v}</p>
