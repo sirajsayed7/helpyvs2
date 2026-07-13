@@ -11,9 +11,9 @@ export default function OfferSuccessPage() {
   const isBanner = params?.promotionKind === 'banner'
 
   return (
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar />
-      <div className="flex-1 overflow-y-auto px-4 pb-6 pt-8">
+      <div className="flex-1 overflow-visible px-4 pb-6 pt-8">
         <div className="bg-white rounded-3xl shadow-sm p-6 text-center">
           <div className="mx-auto w-20 h-20 rounded-full bg-green-50 flex items-center justify-center">
             <CheckCircle2 size={44} className="text-green-500" />

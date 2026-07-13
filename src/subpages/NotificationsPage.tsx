@@ -20,7 +20,7 @@ export default function NotificationsPage(){
   const unread=notifs.filter(n=>!n.read).length
 
   return(
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar/>
       <div className="flex items-center justify-between px-4 pt-2 pb-3">
         <div className="flex items-center gap-3">
@@ -29,7 +29,7 @@ export default function NotificationsPage(){
         </div>
         {unread>0&&<button onClick={markAll} className="text-brand-500 text-[12px] font-semibold">Mark all read</button>}
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pb-6">
+      <div className="flex-1 overflow-visible px-4 pb-6">
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden divide-y divide-gray-50">
           {notifs.map(n=>(
             <button key={n.id} onClick={()=>setNotifs(ns=>ns.map(x=>x.id===n.id?{...x,read:true}:x))}

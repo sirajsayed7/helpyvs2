@@ -39,7 +39,7 @@ export default function EarningsPage(){
   const [vis,setVis]=useState(true)
   const [apt,setApt]=useState<{d:string,v:number}|null>(null)
   return(
-    <div className="flex flex-col flex-1 bg-[#F0F4FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F0F4FF] overflow-y-auto">
       <StatusBar/>
       <div className="flex items-center justify-between px-5 pt-1 pb-3">
         <div><h1 className="text-[24px] font-bold text-gray-900">Earnings</h1><p className="text-[12px] text-gray-400 mt-0.5">Track your income and manage payouts</p></div>
@@ -48,7 +48,7 @@ export default function EarningsPage(){
           <div className="relative w-10 h-10"><div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-300 to-emerald-600 flex items-center justify-center"><User size={18} className="text-white"/></div><span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-400 border-2 border-white"/></div>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+      <div className="flex-1 overflow-visible px-4 pb-6 space-y-4">
         {/* Balance card */}
         <div className="rounded-3xl overflow-hidden relative p-6 min-h-[200px]" style={{background:'linear-gradient(135deg,#4F6EF7 0%,#3B5BF6 40%,#2141E8 100%)'}}>
           <svg className="absolute bottom-0 left-0 right-0 opacity-20" viewBox="0 0 390 80"><path d="M0,40 C60,10 120,70 180,40 C240,10 300,70 390,30 L390,80 L0,80 Z" fill="white"/><path d="M0,55 C80,25 160,75 240,45 C300,22 350,60 390,40 L390,80 L0,80 Z" fill="white" opacity="0.5"/></svg>

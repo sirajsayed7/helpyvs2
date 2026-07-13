@@ -16,13 +16,13 @@ export default function CompletedServicePage(){
   const {goBack,navigate}=useNav()
   const total=COMPLETED.reduce((s,c)=>s+parseFloat(c.price),0).toFixed(2)
   return(
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar/>
       <div className="flex items-center gap-3 px-4 pt-2 pb-3">
         <button onClick={goBack} className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center"><ArrowLeft size={20} className="text-gray-600"/></button>
         <div><h1 className="text-[18px] font-bold text-gray-900">Completed Services</h1><p className="text-[11px] text-gray-400">{COMPLETED.length} jobs this month</p></div>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+      <div className="flex-1 overflow-visible px-4 pb-6 space-y-4">
         {/* Summary */}
         <div className="rounded-2xl p-5" style={{background:'linear-gradient(135deg,#22C55E,#16A34A)'}}>
           <div className="flex items-center gap-2 mb-1"><CheckCircle2 size={18} className="text-white"/><p className="text-white/80 text-[13px] font-medium">Total Earned This Month</p></div>

@@ -27,7 +27,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar />
       {/* Header */}
       <div className="bg-white shadow-sm px-4 pt-2 pb-3 flex items-center gap-3">
@@ -46,7 +46,7 @@ export default function ChatPage() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+      <div className="flex-1 overflow-visible px-4 py-4 space-y-3">
         <div className="text-center"><span className="text-[11px] text-gray-400 bg-white px-3 py-1 rounded-full shadow-sm">Today</span></div>
         {msgs.map(m => (
           <div key={m.id} className={`flex ${m.from === 'me' ? 'justify-end' : 'justify-start'}`}>

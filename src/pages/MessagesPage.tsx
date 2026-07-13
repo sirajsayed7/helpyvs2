@@ -27,7 +27,7 @@ export default function MessagesPage(){
     return matchQ&&matchF
   })
   return(
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar/>
       <div className="flex items-center justify-between px-5 pt-2 pb-1">
         <div><h1 className="text-[24px] font-bold text-gray-900">Messages</h1><p className="text-[12px] text-gray-400 mt-0.5">Stay connected with your customers</p></div>
@@ -53,7 +53,7 @@ export default function MessagesPage(){
           </button>
         ))}
       </div>
-      <div className="flex-1 overflow-y-auto px-4 mt-3 pb-4">
+      <div className="flex-1 overflow-visible px-4 mt-3 pb-4">
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden divide-y divide-gray-50">
           {filtered.map(m=>(
             <button key={m.id} onClick={()=>navigate('chat',{name:m.name,service:m.tag})} className="w-full flex items-start gap-3 p-4 active:bg-gray-50 transition-colors text-left">

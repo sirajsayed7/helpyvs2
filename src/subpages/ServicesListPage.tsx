@@ -12,7 +12,7 @@ const SERVICES=[
 export default function ServicesListPage(){
   const {goBack,navigate}=useNav()
   return(
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar/>
       <div className="flex items-center justify-between px-4 pt-2 pb-3">
         <div className="flex items-center gap-3">
@@ -21,7 +21,7 @@ export default function ServicesListPage(){
         </div>
         <button onClick={()=>navigate('manage-services')} className="text-brand-500 text-[12px] font-semibold bg-blue-50 px-3 py-2 rounded-xl">Manage</button>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-3">
+      <div className="flex-1 overflow-visible px-4 pb-6 space-y-3">
         {SERVICES.map(s=>(
           <button key={s.name} onClick={()=>navigate('manage-services')} className="w-full bg-white rounded-2xl shadow-sm p-4 text-left">
             <div className="flex items-start gap-3">

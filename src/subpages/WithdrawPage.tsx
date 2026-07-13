@@ -26,7 +26,7 @@ export default function WithdrawPage() {
   )
 
   return (
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar />
       <div className="flex items-center gap-3 px-4 pt-2 pb-3">
         <button onClick={goBack} className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center">
@@ -38,7 +38,7 @@ export default function WithdrawPage() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+      <div className="flex-1 overflow-visible px-4 pb-6 space-y-4">
         {/* Amount input */}
         <div className="bg-white rounded-2xl shadow-sm p-5">
           <p className="text-[13px] font-semibold text-gray-500 mb-3">Withdrawal Amount</p>

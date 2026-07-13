@@ -80,7 +80,7 @@ export default function BookingsPage(){
     switchTab('inprogress')
   }
   return(
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar/>
       <div className="flex items-center justify-between px-5 pt-2 pb-1">
         <div><h1 className="text-[24px] font-bold text-gray-900">My Bookings</h1><p className="text-[12px] text-gray-400 mt-0.5">Manage your upcoming and ongoing services</p></div>
@@ -90,7 +90,7 @@ export default function BookingsPage(){
         </div>
       </div>
       <div className="px-4 mt-3"><div className="bg-gray-100 rounded-2xl p-1 flex gap-1">{TABS.map(t=><button key={t} onClick={()=>switchTab(t)} className={`shrink-0 flex-1 py-2 rounded-xl text-[11px] font-semibold transition-all whitespace-nowrap ${tab===t?'bg-white text-brand-500 shadow-sm':'text-gray-500'}`}>{TLABEL[t]}</button>)}</div></div>
-      <div className="flex-1 overflow-y-auto px-4 pt-4 pb-4 space-y-4">
+      <div className="flex-1 overflow-visible px-4 pt-4 pb-4 space-y-4">
         <div className="flex items-center justify-between px-0.5">
           <p className="text-[15px] font-bold text-gray-900">{THEAD[tab]}</p>
           {tab==='upcoming'&&<button onClick={()=>navigate('calendar')} className="flex items-center gap-1 text-brand-500 text-[12px] font-semibold">View Calendar <CalendarDays size={14}/></button>}

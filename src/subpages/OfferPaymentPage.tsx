@@ -32,7 +32,7 @@ export default function OfferPaymentPage() {
   const creativeDetail = isUpload ? offer.bannerFileName || 'Image pending upload' : offer.bannerDesignBrief
 
   return (
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar />
       <div className="flex items-center gap-3 px-4 pt-2 pb-3">
         <button onClick={goBack} className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center">
@@ -44,7 +44,7 @@ export default function OfferPaymentPage() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+      <div className="flex-1 overflow-visible px-4 pb-6 space-y-4">
         <div className="bg-white rounded-3xl shadow-sm p-4">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center">

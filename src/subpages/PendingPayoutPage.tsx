@@ -13,13 +13,13 @@ export default function PendingPayoutPage(){
   const {goBack,navigate}=useNav()
   const total=PENDING.reduce((s,p)=>s+parseFloat(p.amount),0).toFixed(2)
   return(
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar/>
       <div className="flex items-center gap-3 px-4 pt-2 pb-3">
         <button onClick={goBack} className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center"><ArrowLeft size={20} className="text-gray-600"/></button>
         <div><h1 className="text-[18px] font-bold text-gray-900">Pending Payout</h1><p className="text-[11px] text-gray-400">Will be paid within 1-3 business days</p></div>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+      <div className="flex-1 overflow-visible px-4 pb-6 space-y-4">
         {/* Total */}
         <div className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-purple-100 flex items-center justify-center shrink-0"><Clock size={24} className="text-purple-500"/></div>

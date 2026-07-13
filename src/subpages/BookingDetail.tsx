@@ -12,7 +12,7 @@ export default function BookingDetail() {
   const statusColor = isPending ? 'bg-orange-100 text-orange-500' : isCompleted ? 'bg-blue-100 text-blue-600' : isCancelled ? 'bg-red-100 text-red-500' : 'bg-green-100 text-green-600'
 
   return (
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar />
       <div className="flex items-center gap-3 px-4 pt-2 pb-4">
         <button onClick={goBack} className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center">
@@ -21,7 +21,7 @@ export default function BookingDetail() {
         <h1 className="text-[18px] font-bold text-gray-900">Booking Details</h1>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+      <div className="flex-1 overflow-visible px-4 pb-6 space-y-4">
         {/* Client card */}
         <div className="bg-white rounded-2xl shadow-sm p-5">
           <div className="flex items-center gap-4">

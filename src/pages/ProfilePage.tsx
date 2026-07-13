@@ -18,13 +18,13 @@ const PREF=[
 export default function ProfilePage(){
   const {navigate}=useNav()
   return(
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar/>
       <div className="flex items-center justify-between px-5 pt-2 pb-3">
         <div><h1 className="text-[24px] font-bold text-gray-900">Profile</h1><p className="text-[12px] text-gray-400 mt-0.5">Manage your account and business profile</p></div>
         <button onClick={()=>navigate('notification-settings')} className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center"><Settings size={19} className="text-gray-500"/></button>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-4">
+      <div className="flex-1 overflow-visible px-4 pb-4 space-y-4">
         {/* Profile card */}
         <div className="bg-white rounded-2xl shadow-sm p-4">
           <div className="flex items-start gap-4">

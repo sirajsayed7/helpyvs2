@@ -24,7 +24,7 @@ export default function OfferApprovalPage() {
   const creativeDetail = isUpload ? draft.bannerFileName || 'Image pending upload' : draft.bannerDesignBrief
 
   return (
-    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-hidden">
+    <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar />
       <div className="flex items-center gap-3 px-4 pt-2 pb-3">
         <button onClick={goBack} className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center">
@@ -36,7 +36,7 @@ export default function OfferApprovalPage() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+      <div className="flex-1 overflow-visible px-4 pb-6 space-y-4">
         <div className="rounded-3xl bg-white p-4 shadow-sm">
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
