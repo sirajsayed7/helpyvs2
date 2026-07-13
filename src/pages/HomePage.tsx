@@ -1,4 +1,4 @@
-import { Bell, Menu, User, CalendarDays, Briefcase, CheckCircle2, ChevronRight, TrendingUp, CalendarPlus, Clock3, ClipboardList, Star, Megaphone, Trophy } from 'lucide-react'
+import { Bell, User, CalendarDays, Briefcase, CheckCircle2, ChevronRight, TrendingUp, CalendarPlus, Clock3, ClipboardList, Star, Megaphone, Trophy } from 'lucide-react'
 import { StatusBar, WavyBackground } from '../components/shared'
 import { useNav } from '../context/NavContext'
 
@@ -17,8 +17,7 @@ export default function HomePage(){
       <WavyBackground/>
       <div className="relative flex flex-col flex-1 min-h-0" style={{zIndex:1}}>
         <StatusBar/>
-        <div className="flex items-center justify-between px-5 pt-1 pb-3">
-          <button className="w-10 h-10 glass rounded-xl shadow-sm flex items-center justify-center"><Menu size={20} className="text-gray-600"/></button>
+        <div className="hidden flex items-center justify-end px-5 pt-1 pb-2">
           <div className="flex items-center gap-3">
             <button onClick={()=>navigate('notification-settings')} className="relative w-10 h-10 glass rounded-xl shadow-sm flex items-center justify-center">
               <Bell size={20} className="text-gray-600"/>
@@ -31,7 +30,23 @@ export default function HomePage(){
           </div>
         </div>
         <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4 space-y-4">
-          <div className="px-1 pt-1 pb-1">
+          <div className="flex items-start justify-between px-1 pt-1 pb-0">
+            <div className="pt-0.5">
+              <p className="text-[14px] text-gray-500 font-medium">Good morning, Ahmed 👋</p>
+              <h1 className="text-[26px] font-bold text-gray-900 leading-snug mt-0.5">Let's get more<br/>bookings today!</h1>
+            </div>
+            <div className="flex items-center gap-3">
+              <button onClick={()=>navigate('notification-settings')} className="relative w-10 h-10 glass rounded-xl shadow-sm flex items-center justify-center">
+                <Bell size={20} className="text-gray-600"/>
+                <span className="absolute top-2 right-2.5 w-2 h-2 rounded-full bg-red-500 border border-white"/>
+              </button>
+              <button onClick={()=>setActiveTab('profile')} className="relative w-11 h-11">
+                <div className="w-11 h-11 rounded-full border-2 border-white/80 shadow-md bg-gradient-to-br from-emerald-300 to-emerald-600 flex items-center justify-center"><User size={20} className="text-white"/></div>
+                <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-400 border-2 border-white"/>
+              </button>
+            </div>
+          </div>
+          <div className="hidden px-1 pt-0 pb-1">
             <p className="text-[14px] text-gray-500 font-medium">Good morning, Ahmed 👋</p>
             <h1 className="text-[26px] font-bold text-gray-900 leading-snug mt-0.5">Let's get more<br/>bookings today!</h1>
           </div>
