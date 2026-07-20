@@ -30,6 +30,9 @@ import {
 import NewBookingPage     from './subpages/NewBookingPage'
 import OngoingServicePage from './subpages/OngoingServicePage'
 import CompletionEvidencePage from './subpages/CompletionEvidencePage'
+import MarketingVideoRequestPage from './subpages/MarketingVideoRequestPage'
+import MarketingVideoSentPage from './subpages/MarketingVideoSentPage'
+import SubscriptionPage from './subpages/SubscriptionPage'
 import CompletedServicePage from './subpages/CompletedServicePage'
 import NotificationsPage  from './subpages/NotificationsPage'
 import ServicesListPage   from './subpages/ServicesListPage'
@@ -74,6 +77,9 @@ function AppShell() {
       case 'new-booking':           return <NewBookingPage/>
       case 'ongoing-service':       return <OngoingServicePage/>
       case 'completion-evidence':   return <CompletionEvidencePage/>
+      case 'marketing-video-request': return <MarketingVideoRequestPage/>
+      case 'marketing-video-sent':  return <MarketingVideoSentPage/>
+      case 'subscription':          return <SubscriptionPage/>
       case 'completed-service':     return <CompletedServicePage/>
       default:                      return <HomePage/>
     }

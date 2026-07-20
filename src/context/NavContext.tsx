@@ -7,7 +7,7 @@ export type Screen =
   | 'personal-info' | 'business-info' | 'services-list' | 'documents' | 'bank-details'
   | 'notification-settings' | 'availability-settings' | 'privacy-security'
   | 'profile-guide' | 'performance' | 'ongoing-service' | 'completed-service' | 'offers'
-  | 'offer-approval' | 'offer-payment' | 'offer-success' | 'completion-evidence'
+  | 'offer-approval' | 'offer-payment' | 'offer-success' | 'completion-evidence' | 'marketing-video-request' | 'marketing-video-sent' | 'subscription'
 
 interface NavState { screen: Screen; params?: any; history: { screen: Screen; params?: any }[] }
 interface NavCtx {
@@ -21,6 +21,8 @@ interface NavCtx {
   setBookingTab: (t: string) => void
   bookingUpdates: Record<number, Record<string, any>>
   updateBooking: (id: number, changes: Record<string, any>) => void
+  subscriptionPlan: 'Monthly' | '6 Months' | '1 Year'
+  setSubscriptionPlan: (plan: 'Monthly' | '6 Months' | '1 Year') => void
 }
 
 const Ctx = createContext<NavCtx>(null as any)
@@ -30,6 +32,7 @@ export function NavProvider({ children }: { children: ReactNode }) {
   const [activeTab, setActiveTabState] = useState('home')
   const [bookingTab, setBookingTab] = useState('upcoming')
   const [bookingUpdates, setBookingUpdates] = useState<Record<number, Record<string, any>>>({})
+  const [subscriptionPlan, setSubscriptionPlan] = useState<'Monthly' | '6 Months' | '1 Year'>('Monthly')
 
   const navigate = (screen: Screen, params?: any) =>
     setState(s => ({ screen, params, history: [...s.history, { screen: s.screen, params: s.params }] }))
@@ -50,7 +53,7 @@ export function NavProvider({ children }: { children: ReactNode }) {
     setBookingUpdates(current => ({ ...current, [id]: { ...current[id], ...changes } }))
 
   return (
-    <Ctx.Provider value={{ screen: state.screen, params: state.params, navigate, goBack, canGoBack: state.history.length > 0, activeTab, setActiveTab, bookingTab, setBookingTab, bookingUpdates, updateBooking }}>
+    <Ctx.Provider value={{ screen: state.screen, params: state.params, navigate, goBack, canGoBack: state.history.length > 0, activeTab, setActiveTab, bookingTab, setBookingTab, bookingUpdates, updateBooking, subscriptionPlan, setSubscriptionPlan }}>
       {children}
     </Ctx.Provider>
   )

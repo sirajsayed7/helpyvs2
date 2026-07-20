@@ -1,4 +1,4 @@
-import { Settings, ChevronRight, Star, CalendarDays, MapPin, User, Store, Briefcase, FileText, Building2, Bell, Clock3, Shield, PenLine, BadgeCheck } from 'lucide-react'
+import { Settings, ChevronRight, Star, CalendarDays, MapPin, User, Store, Briefcase, FileText, Building2, Bell, Clock3, Shield, PenLine, BadgeCheck, Crown, CalendarClock, ArrowUpRight } from 'lucide-react'
 import { StatusBar } from '../components/shared'
 import { useNav } from '../context/NavContext'
 
@@ -16,7 +16,9 @@ const PREF=[
 ]
 
 export default function ProfilePage(){
-  const {navigate}=useNav()
+  const {navigate,subscriptionPlan}=useNav()
+  const renewalDate=subscriptionPlan==='Monthly'?'15 Aug 2026':subscriptionPlan==='6 Months'?'15 Jan 2027':'15 Jul 2027'
+  const planName=subscriptionPlan==='Monthly'?'Basic':subscriptionPlan==='6 Months'?'Growth':'Premium'
   return(
     <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
       <StatusBar/>
@@ -81,6 +83,21 @@ export default function ProfilePage(){
             </button>
           ))}
         </div>
+        {/* Subscription */}
+        <button onClick={()=>navigate('subscription')} className="relative w-full overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-blue-950 to-brand-600 p-4 text-left text-white shadow-sm active:scale-[0.99] transition-transform">
+          <div className="absolute -right-8 -top-10 h-28 w-28 rounded-full bg-white/10"/>
+          <div className="relative">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-3"><div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15"><Crown size={20}/></div><div><div className="flex items-center gap-2"><p className="text-[14px] font-bold">Helpy subscription</p><span className="rounded-full bg-emerald-400/20 px-2 py-0.5 text-[9px] font-bold text-emerald-200">ACTIVE</span></div><p className="mt-0.5 text-[11px] text-white/65">{planName} · {subscriptionPlan}</p></div></div>
+              <ArrowUpRight size={18} className="text-white/70"/>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              <div className="rounded-2xl bg-white/10 px-3 py-2.5"><p className="text-[9px] text-white/55">Member since</p><p className="mt-0.5 text-[12px] font-bold">15 Jan 2024</p></div>
+              <div className="rounded-2xl bg-white/10 px-3 py-2.5"><div className="flex items-center gap-1"><CalendarClock size={11} className="text-white/55"/><p className="text-[9px] text-white/55">Next renewal</p></div><p className="mt-0.5 text-[12px] font-bold">{renewalDate}</p></div>
+            </div>
+            <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3"><p className="text-[10px] text-white/60">View billing and change your plan</p><span className="rounded-xl bg-white px-3 py-1.5 text-[10px] font-bold text-blue-700">Manage plan</span></div>
+          </div>
+        </button>
         {/* Account */}
         <div>
           <p className="text-[15px] font-bold text-gray-900 mb-2 px-0.5">Account</p>
