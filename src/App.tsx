@@ -1,5 +1,11 @@
 import { NavProvider, useNav } from './context/NavContext'
 import { BottomNav } from './components/shared'
+import OnboardingPage from './auth/OnboardingPage'
+import SignUpPage from './auth/SignUpPage'
+import LoginPage from './auth/LoginPage'
+import VerifyCodePage from './auth/VerifyCodePage'
+import ChoosePlanPage from './auth/ChoosePlanPage'
+import PlanPaymentPage from './auth/PlanPaymentPage'
 
 // Main pages
 import HomePage     from './pages/HomePage'
@@ -39,13 +45,21 @@ import ServicesListPage   from './subpages/ServicesListPage'
 import PendingPayoutPage  from './subpages/PendingPayoutPage'
 
 const TAB_SCREENS = ['home','bookings','messages','earnings','profile']
+const AUTH_SCREENS = ['onboarding','sign-up','login','verify-code','choose-plan','plan-payment']
 
 function AppShell() {
   const { screen, activeTab, setActiveTab } = useNav()
   const isSubPage = !TAB_SCREENS.includes(screen)
+  const isAuthScreen = AUTH_SCREENS.includes(screen)
 
   const renderScreen = () => {
     switch(screen) {
+      case 'onboarding':            return <OnboardingPage/>
+      case 'sign-up':               return <SignUpPage/>
+      case 'login':                 return <LoginPage/>
+      case 'verify-code':           return <VerifyCodePage/>
+      case 'choose-plan':           return <ChoosePlanPage/>
+      case 'plan-payment':          return <PlanPaymentPage/>
       case 'home':                  return <HomePage/>
       case 'bookings':              return <BookingsPage/>
       case 'messages':              return <MessagesPage/>
@@ -93,13 +107,15 @@ function AppShell() {
           {renderScreen()}
         </div>
         {/* FROZEN bottom nav — always visible */}
-        <div className="shrink-0 relative z-50">
-          <BottomNav
-            active={activeTab}
-            onChange={setActiveTab}
-            msgBadge={3}
-          />
-        </div>
+        {!isAuthScreen && (
+          <div className="shrink-0 relative z-50">
+            <BottomNav
+              active={activeTab}
+              onChange={setActiveTab}
+              msgBadge={3}
+            />
+          </div>
+        )}
       </div>
     </div>
   )

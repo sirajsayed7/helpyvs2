@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, ReactNode } from 'react'
 
 export type Screen =
+  | 'onboarding' | 'sign-up' | 'login' | 'verify-code' | 'choose-plan' | 'plan-payment'
   | 'home' | 'bookings' | 'messages' | 'earnings' | 'profile'
   | 'booking-detail' | 'chat' | 'calendar' | 'availability' | 'manage-services'
   | 'reviews' | 'new-booking' | 'withdraw' | 'all-transactions' | 'pending-payout'
@@ -28,7 +29,7 @@ interface NavCtx {
 const Ctx = createContext<NavCtx>(null as any)
 
 export function NavProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<NavState>({ screen: 'home', history: [] })
+  const [state, setState] = useState<NavState>({ screen: 'onboarding', history: [] })
   const [activeTab, setActiveTabState] = useState('home')
   const [bookingTab, setBookingTab] = useState('upcoming')
   const [bookingUpdates, setBookingUpdates] = useState<Record<number, Record<string, any>>>({})
