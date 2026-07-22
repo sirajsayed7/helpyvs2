@@ -485,19 +485,6 @@ export default function OffersPage() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-violet-600 to-brand-600 p-4 text-white shadow-sm">
-          <div className="flex items-start gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/15"><Video size={21} /></div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[15px] font-bold">Need a professional video?</p>
-              <p className="mt-1 text-[11px] leading-relaxed text-white/75">Tell our marketing team what you want to showcase and we’ll create a customer-ready video for your business.</p>
-            </div>
-          </div>
-          <button type="button" onClick={() => navigate('marketing-video-request')} className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-white py-3 text-[13px] font-bold text-violet-600 shadow-sm active:scale-[0.99]">
-            <Video size={16} /> Request marketing video
-          </button>
-        </div>
-
         <div className="rounded-3xl bg-white p-4 shadow-sm">
           <div className="mb-3 flex items-center justify-between">
             <div>
@@ -571,6 +558,22 @@ export default function OffersPage() {
           <CreditCard size={18} />
           <span className="text-[14px] font-bold">{isBanner ? `Send for approval and pay ${promoFee} QR` : `Pay ${promoFee} QR to Promote`}</span>
         </button>
+
+        <div>
+          <p className="mb-2 px-0.5 text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Marketing support</p>
+          <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-violet-600 to-brand-600 p-4 text-white shadow-sm">
+            <div className="flex items-start gap-3">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/15"><Video size={21} /></div>
+              <div className="min-w-0 flex-1">
+                <p className="text-[15px] font-bold">Need a professional video?</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-white/75">Tell our marketing team what you want to showcase and we’ll create a customer-ready video for your business.</p>
+              </div>
+            </div>
+            <button type="button" onClick={() => navigate('marketing-video-request')} className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-white py-3 text-[13px] font-bold text-violet-600 shadow-sm active:scale-[0.99]">
+              <Video size={16} /> Request marketing video
+            </button>
+          </div>
+        </div>
 
         {!isBanner && (
           <div>
