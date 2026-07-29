@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
   ArrowLeft,
   BadgePercent,
@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 import { useNav } from '../context/NavContext'
 import { StatusBar } from '../components/shared'
+import { listVendorServices } from '../lib/marketplace'
 
 type PromotionKind = 'service' | 'event' | 'banner'
 type OfferType = 'discount' | 'fixed'
@@ -104,11 +105,13 @@ export default function OffersPage() {
   const [durationMenuOpen, setDurationMenuOpen] = useState(false)
   const [bannerCreativeMode, setBannerCreativeMode] = useState<BannerCreativeMode>('upload')
   const [bannerFileName, setBannerFileName] = useState('')
+  const [bannerFile, setBannerFile] = useState<File | null>(null)
   const [bannerDesignBrief, setBannerDesignBrief] = useState('Create a clean homepage banner for a trusted cleaning service in Qatar, using a bright city-service feel and clear booking CTA.')
   const [ctaLabel, setCtaLabel] = useState('Book Now')
+  const [serviceOptions, setServiceOptions] = useState(SERVICES)
 
   const isBanner = promotionKind === 'banner'
-  const targetOptions = promotionKind === 'event' ? EVENTS : SERVICES
+  const targetOptions = promotionKind === 'event' ? EVENTS : serviceOptions
   const durationOptions = isBanner ? BANNER_DURATION_OPTIONS : OFFER_DURATION_OPTIONS
   const durationCount = numberFromDuration(duration)
   const promoFee = String(durationCount * (isBanner ? BANNER_RATE_PER_WEEK : OFFER_PROMO_RATE_PER_DAY))
@@ -126,6 +129,7 @@ export default function OffersPage() {
     promoFee,
     bannerCreativeMode,
     bannerFileName,
+    bannerFile,
     bannerDesignBrief,
     ctaLabel,
   }
@@ -140,6 +144,16 @@ export default function OffersPage() {
     requestAnimationFrame(scrollToTop)
   }, [params?.scrollToTop])
 
+  useEffect(() => {
+    void listVendorServices().then(services => {
+      const names = services.filter(service => service.is_active).map(service => service.name)
+      if (names.length) {
+        setServiceOptions(names)
+        setTarget(current => names.includes(current) ? current : names[0])
+      }
+    }).catch(() => undefined)
+  }, [])
+
   const setMode = (kind: PromotionKind) => {
     setPromotionKind(kind)
     setTargetMenuOpen(false)
@@ -148,7 +162,7 @@ export default function OffersPage() {
     if (kind === 'service') {
       setTitle('Summer Cleaning Deal')
       setDescription('Get a professional cleaning package at a limited-time promoted price. Ideal for apartments and family homes.')
-      setTarget(SERVICES[0])
+      setTarget(serviceOptions[0] || SERVICES[0])
       setDuration('7 days')
       setOfferType('discount')
       setDealValue('20')
@@ -167,12 +181,13 @@ export default function OffersPage() {
 
     setTitle('Homepage Spotlight Banner')
     setDescription('Place a featured banner on the customer app homepage and route customers directly to your chosen service.')
-    setTarget(SERVICES[0])
+    setTarget(serviceOptions[0] || SERVICES[0])
     setDuration('1 week')
     setOfferType('fixed')
     setDealValue('299')
     setBannerCreativeMode('upload')
     setBannerFileName('')
+    setBannerFile(null)
     setBannerDesignBrief('Create a clean homepage banner for a trusted cleaning service in Qatar, using a bright city-service feel and clear booking CTA.')
     setCtaLabel('Book Now')
   }
@@ -350,7 +365,11 @@ export default function OffersPage() {
                       type="file"
                       accept="image/*"
                       className="hidden"
-                      onChange={e => setBannerFileName(e.target.files?.[0]?.name || '')}
+                      onChange={e => {
+                        const file = e.target.files?.[0] || null
+                        setBannerFile(file)
+                        setBannerFileName(file?.name || '')
+                      }}
                     />
                     <div className="flex items-center gap-3">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white">

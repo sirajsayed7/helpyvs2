@@ -20,6 +20,7 @@ import ChatPage           from './subpages/ChatPage'
 import CalendarPage       from './subpages/CalendarPage'
 import AvailabilityPage   from './subpages/AvailabilityPage'
 import ManageServicesPage from './subpages/ManageServicesPage'
+import AddServicePage     from './subpages/AddServicePage'
 import ReviewsPage        from './subpages/ReviewsPage'
 import OffersPage         from './subpages/OffersPage'
 import OfferApprovalPage  from './subpages/OfferApprovalPage'
@@ -71,6 +72,7 @@ function AppShell() {
       case 'availability':          return <AvailabilityPage/>
       case 'availability-settings': return <AvailabilityPage/>
       case 'manage-services':       return <ManageServicesPage/>
+      case 'add-service':           return <AddServicePage/>
       case 'services-list':         return <ServicesListPage/>
       case 'reviews':               return <ReviewsPage/>
       case 'offers':                return <OffersPage/>

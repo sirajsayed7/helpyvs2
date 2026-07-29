@@ -1,6 +1,8 @@
-import { ArrowLeft, CalendarDays, CheckCircle2, CreditCard, FileImage, LayoutTemplate, Megaphone, PartyPopper, ShieldCheck, Sparkles, Wand2 } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowLeft, CalendarDays, CheckCircle2, CreditCard, FileImage, LayoutTemplate, Loader2, Megaphone, PartyPopper, ShieldCheck, Sparkles, Wand2 } from 'lucide-react'
 import { StatusBar } from '../components/shared'
 import { useNav } from '../context/NavContext'
+import { publishPromotion } from '../lib/marketplace'
 
 const OFFER_RATE_PER_DAY = 19
 const BANNER_RATE_PER_WEEK = 199
@@ -30,6 +32,21 @@ export default function OfferPaymentPage() {
   const isUpload = offer.bannerCreativeMode !== 'request'
   const creativeLabel = isUpload ? 'Uploaded banner image' : 'Requested banner design'
   const creativeDetail = isUpload ? offer.bannerFileName || 'Image pending upload' : offer.bannerDesignBrief
+  const [processing, setProcessing] = useState(false)
+  const [error, setError] = useState('')
+
+  const pay = async () => {
+    setProcessing(true)
+    setError('')
+    try {
+      await publishPromotion(offer, offer.bannerFile || null)
+      navigate('offer-success', offer)
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : 'Unable to publish this promotion')
+    } finally {
+      setProcessing(false)
+    }
+  }
 
   return (
     <div className="flex flex-col flex-1 bg-[#F4F6FF] overflow-y-auto">
@@ -152,12 +169,14 @@ export default function OfferPaymentPage() {
           </div>
         </div>
 
+        {error && <div className="rounded-2xl bg-red-50 px-4 py-3 text-[11px] font-semibold text-red-600">{error}</div>}
         <button
-          onClick={() => navigate('offer-success', offer)}
-          className="w-full bg-brand-500 text-white rounded-2xl py-4 shadow-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
+          onClick={() => void pay()}
+          disabled={processing}
+          className="w-full bg-brand-500 text-white rounded-2xl py-4 shadow-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform disabled:opacity-60"
         >
-          <CreditCard size={18} />
-          <span className="text-[14px] font-bold">Pay {offer.promoFee} QR</span>
+          {processing ? <Loader2 size={18} className="animate-spin" /> : <CreditCard size={18} />}
+          <span className="text-[14px] font-bold">{processing ? 'Publishing…' : `Pay ${offer.promoFee} QR`}</span>
         </button>
       </div>
     </div>
