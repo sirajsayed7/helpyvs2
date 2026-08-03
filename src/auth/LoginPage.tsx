@@ -67,7 +67,7 @@ export default function LoginPage() {
 
         <p className="mt-5 text-center text-[13px] text-slate-500">
           New to Helpy?{' '}
-          <button type="button" onClick={() => navigate('sign-up')} className="font-bold text-blue-600">Create an account</button>
+          <button type="button" onClick={() => navigate('account-type')} className="font-bold text-blue-600">Create an account</button>
         </p>
       </div>
     </main>

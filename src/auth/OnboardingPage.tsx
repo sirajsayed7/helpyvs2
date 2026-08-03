@@ -60,7 +60,7 @@ export default function OnboardingPage() {
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
-                onClick={() => navigate('sign-up')}
+                onClick={() => navigate('account-type')}
                 className="h-14 rounded-2xl bg-[#0AAAD6] text-[16px] font-bold text-white shadow-[0_8px_18px_rgba(10,170,214,0.22)] transition active:scale-[0.98]"
               >
                 Sign Up

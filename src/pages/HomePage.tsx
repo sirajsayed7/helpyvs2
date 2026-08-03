@@ -1,4 +1,4 @@
-import { Bell, User, CalendarDays, Briefcase, CheckCircle2, ChevronRight, TrendingUp, CalendarPlus, Clock3, ClipboardList, Star, Megaphone, Trophy } from 'lucide-react'
+import { Bell, User, CalendarDays, Briefcase, CheckCircle2, ChevronRight, TrendingUp, Clock3, ClipboardList, Star, Megaphone, Trophy } from 'lucide-react'
 import { StatusBar, WavyBackground } from '../components/shared'
 import { useNav } from '../context/NavContext'
 
@@ -99,17 +99,17 @@ export default function HomePage(){
           </button>
           {/* Quick Access */}
           <div>
-            <p className="text-[15px] font-bold text-gray-900 mb-3 px-0.5">Quick Access</p>
+            <p className="mb-1.5 px-0.5 text-[15px] font-bold text-gray-900">Quick Access</p>
             <div className="flex gap-2.5">
               {[
-                {icon:<CalendarPlus  size={17} className="text-blue-500"/>  ,bg:'bg-blue-100'  ,label:'New Booking'     ,screen:'new-booking'},
                 {icon:<Clock3        size={17} className="text-purple-500"/>,bg:'bg-purple-100',label:'Availability'    ,screen:'availability'},
                 {icon:<ClipboardList size={17} className="text-green-500"/> ,bg:'bg-green-100' ,label:'Manage Services' ,screen:'manage-services'},
                 {icon:<Star          size={17} className="text-amber-500"/> ,bg:'bg-amber-100' ,label:'Reviews'         ,screen:'reviews'},
               ].map(c=>(
-                <button key={c.label} onClick={()=>navigate(c.screen as any)} className="flex-1 glass rounded-2xl p-3.5 shadow-sm flex flex-col items-start gap-2 active:scale-95 transition-transform duration-150">
-                  <div className={`mx-auto w-9 h-9 rounded-xl flex items-center justify-center ${c.bg}`}>{c.icon}</div>
-                  <div className="flex items-center justify-between w-full"><p className="text-[11px] font-semibold text-gray-700 leading-tight">{c.label}</p><ChevronRight size={12} className="text-gray-300"/></div>
+                <button key={c.label} onClick={()=>navigate(c.screen as any)} className="flex min-h-[64px] min-w-0 flex-1 items-center gap-1.5 rounded-[17px] border border-white/90 px-2.5 py-2 glass shadow-[0_8px_22px_rgba(68,103,140,0.09)] transition-all duration-150 active:scale-95 active:shadow-sm">
+                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-[11px] ${c.bg}`}>{c.icon}</div>
+                  <p className="min-w-0 flex-1 text-left text-[11px] font-semibold leading-[14px] text-gray-700">{c.label}</p>
+                  <ChevronRight size={12} className="shrink-0 text-gray-300"/>
                 </button>
               ))}
             </div>

@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, ReactNode } from 'react'
 
 export type Screen =
-  | 'onboarding' | 'sign-up' | 'login' | 'verify-code' | 'choose-plan' | 'plan-payment'
+  | 'onboarding' | 'account-type' | 'sign-up' | 'login' | 'verify-code' | 'choose-plan' | 'plan-payment'
   | 'home' | 'bookings' | 'messages' | 'earnings' | 'profile'
   | 'booking-detail' | 'chat' | 'calendar' | 'availability' | 'manage-services' | 'add-service'
   | 'reviews' | 'new-booking' | 'withdraw' | 'all-transactions' | 'pending-payout'

@@ -24,7 +24,8 @@ function Field({ label, action, ...props }: FieldProps) {
 }
 
 export default function SignUpPage() {
-  const { goBack, navigate } = useNav()
+  const { goBack, navigate, params } = useNav()
+  const accountType = params?.accountType === 'business' ? 'business' : 'freelancer'
   const [passwordVisible, setPasswordVisible] = useState(false)
   const [confirmationVisible, setConfirmationVisible] = useState(false)
   const [password, setPassword] = useState('')
@@ -79,7 +80,9 @@ export default function SignUpPage() {
 
         <div className="mt-12 px-1">
           <h1 className="text-[29px] font-extrabold tracking-tight text-slate-950">Let’s Get Started</h1>
-          <p className="mt-1 text-[14px] text-slate-500">Create your vendor account to continue.</p>
+          <p className="mt-1 text-[14px] text-slate-500">
+            Create your {accountType === 'business' ? 'business' : 'freelancer'} account to continue.
+          </p>
         </div>
 
         <form onSubmit={submit} className="mt-5 space-y-4 rounded-3xl border border-white bg-white/95 p-5 shadow-[0_18px_45px_rgba(54,101,145,0.13)] backdrop-blur-md">
@@ -96,6 +99,10 @@ export default function SignUpPage() {
               <input aria-label="Phone number" placeholder="Enter your phone number" type="tel" inputMode="numeric" autoComplete="tel" className="h-full min-w-0 flex-1 bg-transparent px-4 text-[14px] text-slate-900 outline-none placeholder:text-slate-400" />
             </div>
           </div>
+
+          {accountType === 'business' && (
+            <Field label="CR Number" placeholder="Enter your commercial registration number" inputMode="numeric" />
+          )}
 
           <Field
             label="Password"

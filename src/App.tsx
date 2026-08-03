@@ -1,6 +1,7 @@
 import { NavProvider, useNav } from './context/NavContext'
 import { BottomNav } from './components/shared'
 import OnboardingPage from './auth/OnboardingPage'
+import AccountTypePage from './auth/AccountTypePage'
 import SignUpPage from './auth/SignUpPage'
 import LoginPage from './auth/LoginPage'
 import VerifyCodePage from './auth/VerifyCodePage'
@@ -46,7 +47,7 @@ import ServicesListPage   from './subpages/ServicesListPage'
 import PendingPayoutPage  from './subpages/PendingPayoutPage'
 
 const TAB_SCREENS = ['home','bookings','messages','earnings','profile']
-const AUTH_SCREENS = ['onboarding','sign-up','login','verify-code','choose-plan','plan-payment']
+const AUTH_SCREENS = ['onboarding','account-type','sign-up','login','verify-code','choose-plan','plan-payment']
 
 function AppShell() {
   const { screen, activeTab, setActiveTab } = useNav()
@@ -56,6 +57,7 @@ function AppShell() {
   const renderScreen = () => {
     switch(screen) {
       case 'onboarding':            return <OnboardingPage/>
+      case 'account-type':          return <AccountTypePage/>
       case 'sign-up':               return <SignUpPage/>
       case 'login':                 return <LoginPage/>
       case 'verify-code':           return <VerifyCodePage/>

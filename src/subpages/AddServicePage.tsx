@@ -14,31 +14,49 @@ import { useNav } from '../context/NavContext'
 import { saveVendorService, uploadVendorMedia } from '../lib/marketplace'
 
 const CATEGORIES = [
-  'Home Services',
-  'Car Services',
-  'Laundry',
-  'Salon & Spa',
+  'Cleaning',
   'Maintenance',
+  'Design & Branding',
+  'Gifts',
+  'Government',
+  'Tech Support',
+  'Language',
+  'Health & Wellness',
+  'Tutoring & Training',
+  'Media',
   'Digital',
-  'Education',
+  'Car Services',
+  'Home',
+  'Laundry',
+  'Pets',
   'Deliveries',
-  'Travel',
+  'Salon & Spa',
+  'Marketplace',
 ]
 
 const SERVICE_OPTIONS: Record<string, string[]> = {
-  'Home Services': ['General Cleaning', 'Deep Cleaning', 'Move-in / Move-out', 'Sofa Cleaning', 'Office Cleaning'],
-  'Car Services': ['Basic Wash', 'Premium Wash', 'Full Detail', 'Interior Cleaning'],
-  Laundry: ['Wash & Fold', 'Dry Cleaning', 'Ironing', 'Bedding Laundry'],
-  'Salon & Spa': ['Hair Styling', 'Facial Treatment', 'Manicure & Pedicure', 'Massage'],
+  Cleaning: ['General Cleaning', 'Deep Cleaning', 'Move-in / Move-out', 'Sofa Cleaning', 'Office Cleaning'],
   Maintenance: ['AC Service', 'Plumbing Visit', 'Electrical Check', 'General Repair'],
-  Digital: ['Logo Design', 'Website Design', 'Social Media Design', 'Device Setup'],
-  Education: ['Math Tutoring', 'English Tutoring', 'Exam Preparation', 'Homework Support'],
-  Deliveries: ['Same-day Delivery', 'Document Courier', 'Scheduled Pickup'],
-  Travel: ['Travel Package', 'Airport Transfer', 'Tour Booking', 'Hotel Booking'],
+  'Design & Branding': ['Logo Design', 'Brand Identity', 'Graphic Design', 'Packaging Design'],
+  Gifts: ['Custom Gift Box', 'Flower Arrangement', 'Personalised Gift', 'Corporate Gifts'],
+  Government: ['Document Assistance', 'Application Support', 'Translation Support', 'Appointment Assistance'],
+  'Tech Support': ['Device Setup', 'Computer Repair', 'Network Setup', 'Data Backup'],
+  Language: ['English Lessons', 'Arabic Lessons', 'Translation', 'Interpretation'],
+  'Health & Wellness': ['Personal Training', 'Nutrition Consultation', 'Wellness Coaching', 'Home Physiotherapy'],
+  'Tutoring & Training': ['Math Tutoring', 'English Tutoring', 'Exam Preparation', 'Professional Training'],
+  Media: ['Photography', 'Videography', 'Video Editing', 'Content Production'],
+  Digital: ['Website Design', 'App Design', 'Social Media Management', 'Digital Marketing'],
+  'Car Services': ['Basic Wash', 'Premium Wash', 'Full Detail', 'Interior Cleaning'],
+  Home: ['Home Organisation', 'Furniture Assembly', 'Moving Assistance', 'Pest Control'],
+  Laundry: ['Wash & Fold', 'Dry Cleaning', 'Ironing', 'Bedding Laundry'],
+  Pets: ['Pet Grooming', 'Dog Walking', 'Pet Sitting', 'Home Vet Checkup'],
+  Deliveries: ['Same-day Delivery', 'Document Courier', 'Scheduled Pickup', 'Large-item Delivery'],
+  'Salon & Spa': ['Hair Styling', 'Facial Treatment', 'Manicure & Pedicure', 'Massage'],
+  Marketplace: ['Product Listing', 'Made-to-order Product', 'Rental Item', 'Special Order'],
 }
 
 const DURATION_UNITS = ['Minutes', 'Hours', 'Days', 'Weeks']
-const BOOKING_TYPES = ['Instant booking', 'Request approval', 'Request a quote']
+const BOOKING_TYPES = ['On-Premise', 'Digital', 'Door-Step']
 const MAX_FILE_BYTES = 1024 * 1024
 
 type FormState = {
@@ -57,7 +75,7 @@ type FormState = {
 }
 
 const INITIAL_FORM: FormState = {
-  category: 'Home Services',
+  category: 'Cleaning',
   preset: '',
   nameEnglish: '',
   nameArabic: '',
@@ -66,7 +84,7 @@ const INITIAL_FORM: FormState = {
   price: '',
   specialtyEnglish: '',
   specialtyArabic: '',
-  bookingType: 'Instant booking',
+  bookingType: 'On-Premise',
   descriptionEnglish: '',
   descriptionArabic: '',
 }
@@ -84,7 +102,7 @@ function SelectField({
 }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="relative">
+    <div className={`relative ${open ? 'z-[70]' : 'z-0'}`}>
       <span className="mb-1.5 block px-1 text-[12px] font-bold text-slate-800">{label}</span>
       <button
         type="button"
@@ -375,7 +393,7 @@ export default function AddServicePage() {
       </div>
 
       <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-6">
-        <section className="space-y-4 rounded-3xl border border-white bg-white/95 p-5 shadow-[0_18px_45px_rgba(54,101,145,0.10)] backdrop-blur-md">
+        <section className="relative z-40 space-y-4 rounded-3xl border border-white bg-white/95 p-5 shadow-[0_18px_45px_rgba(54,101,145,0.10)] backdrop-blur-md">
           <div className="flex items-start gap-3">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-[12px] font-black text-brand-600">1</span>
             <div>
@@ -403,7 +421,7 @@ export default function AddServicePage() {
           <TextField label="Name in Arabic" value={form.nameArabic} onChange={value => update('nameArabic', value)} placeholder="اسم الخدمة" dir="rtl" />
         </section>
 
-        <section className="space-y-4 rounded-3xl border border-white bg-white/95 p-5 shadow-[0_18px_45px_rgba(54,101,145,0.10)] backdrop-blur-md">
+        <section className="relative z-30 space-y-4 rounded-3xl border border-white bg-white/95 p-5 shadow-[0_18px_45px_rgba(54,101,145,0.10)] backdrop-blur-md">
           <div className="flex items-start gap-3">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-[12px] font-black text-amber-600">2</span>
             <div>
@@ -419,7 +437,7 @@ export default function AddServicePage() {
           <SelectField label="Booking type" value={form.bookingType} options={BOOKING_TYPES} onChange={value => update('bookingType', value)} />
         </section>
 
-        <section className="space-y-4 rounded-3xl border border-white bg-white/95 p-5 shadow-[0_18px_45px_rgba(54,101,145,0.10)] backdrop-blur-md">
+        <section className="relative z-20 space-y-4 rounded-3xl border border-white bg-white/95 p-5 shadow-[0_18px_45px_rgba(54,101,145,0.10)] backdrop-blur-md">
           <div className="flex items-start gap-3">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-purple-50 text-[12px] font-black text-purple-600">3</span>
             <div>
@@ -433,7 +451,7 @@ export default function AddServicePage() {
           <TextAreaField label="Description in Arabic" value={form.descriptionArabic} onChange={value => update('descriptionArabic', value)} placeholder="اكتب وصف الخدمة باللغة العربية" dir="rtl" />
         </section>
 
-        <section className="space-y-4 rounded-3xl border border-white bg-white/95 p-5 shadow-[0_18px_45px_rgba(54,101,145,0.10)] backdrop-blur-md">
+        <section className="relative z-10 space-y-4 rounded-3xl border border-white bg-white/95 p-5 shadow-[0_18px_45px_rgba(54,101,145,0.10)] backdrop-blur-md">
           <div className="flex items-start gap-3">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-[12px] font-black text-emerald-600">4</span>
             <div>
