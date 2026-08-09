@@ -100,10 +100,6 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          {accountType === 'business' && (
-            <Field label="CR Number" placeholder="Enter your commercial registration number" inputMode="numeric" />
-          )}
-
           <Field
             label="Password"
             placeholder="Enter your password"

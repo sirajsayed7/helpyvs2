@@ -67,7 +67,6 @@ export default function BookingDetail() {
           <p className="text-[14px] font-bold text-gray-800 mb-3">Payment Summary</p>
           <div className="space-y-2">
             <div className="flex justify-between"><span className="text-[13px] text-gray-500">Service fee</span><span className="text-[13px] font-semibold text-gray-800">{b.price || '180.00'} QR</span></div>
-            <div className="flex justify-between"><span className="text-[13px] text-gray-500">Platform fee</span><span className="text-[13px] font-semibold text-gray-800">18.00 QR</span></div>
             <div className="h-px bg-gray-100 my-2" />
             <div className="flex justify-between"><span className="text-[14px] font-bold text-gray-900">Total</span><span className="text-[14px] font-bold text-brand-500">{b.price || '180.00'} QR</span></div>
           </div>

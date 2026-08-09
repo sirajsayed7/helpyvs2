@@ -36,14 +36,14 @@ export default function CompletedServicePage(){
         {/* List */}
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden divide-y divide-gray-50">
           {COMPLETED.map((c,i)=>(
-            <button key={i} onClick={()=>navigate('booking-detail',{...c,status:'Completed',avatar:c.av})} className="w-full flex items-center gap-3 p-4 active:bg-gray-50 text-left">
+            <button key={i} onClick={()=>navigate('receipt',{...c,id:i+1,status:'Completed',avatar:c.av})} className="w-full flex items-center gap-3 p-4 active:bg-gray-50 text-left">
               <div className={`w-11 h-11 rounded-full ${c.bg} flex items-center justify-center text-white font-bold`}>{c.av}</div>
               <div className="flex-1">
                 <p className="text-[13px] font-bold text-gray-900">{c.name}</p>
                 <p className="text-[11px] text-gray-400">{c.service} · {c.date}</p>
                 <div className="flex gap-0.5 mt-1">{[1,2,3,4,5].map(s=><Star key={s} size={10} className={s<=c.rating?'text-amber-400 fill-amber-400':'text-gray-200 fill-gray-200'}/>)}</div>
               </div>
-              <div className="text-right"><p className="text-[14px] font-bold text-green-500">+{c.price} QR</p><div className="flex items-center gap-1 mt-1 justify-end"><Download size={12} className="text-gray-400"/><span className="text-[11px] text-gray-400">Receipt</span></div></div>
+              <div className="text-right"><p className="text-[14px] font-bold text-green-500">+{c.price} QR</p><div className="flex items-center gap-1 mt-1 justify-end"><Download size={12} className="text-gray-400"/><span className="text-[11px] text-gray-400">Receipt & review</span></div></div>
               <ChevronRight size={14} className="text-gray-300"/>
             </button>
           ))}

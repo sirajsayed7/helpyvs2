@@ -3,7 +3,7 @@ import { createContext, useContext, useState, ReactNode } from 'react'
 export type Screen =
   | 'onboarding' | 'account-type' | 'sign-up' | 'login' | 'verify-code' | 'choose-plan' | 'plan-payment'
   | 'home' | 'bookings' | 'messages' | 'earnings' | 'profile'
-  | 'booking-detail' | 'chat' | 'calendar' | 'availability' | 'manage-services' | 'add-service'
+  | 'booking-detail' | 'receipt' | 'chat' | 'calendar' | 'availability' | 'manage-services' | 'add-service'
   | 'reviews' | 'new-booking' | 'withdraw' | 'all-transactions' | 'pending-payout'
   | 'personal-info' | 'business-info' | 'services-list' | 'documents' | 'bank-details'
   | 'notification-settings' | 'availability-settings' | 'privacy-security'

@@ -56,7 +56,7 @@ function Card({b,tab,onAccept}:{b:Booking;tab:Tab;onAccept:(booking:Booking)=>vo
           {b.status==='Pending'?(
             <button onClick={()=>onAccept(b)} className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-500 text-white text-[13px] font-semibold"><CheckCircle size={15}/>Accept Booking</button>
           ):tab==='completed'?(
-            <button onClick={()=>navigate('booking-detail',b)} className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-500 text-white text-[13px] font-semibold"><Eye size={15}/>View Receipt</button>
+            <button onClick={()=>navigate('receipt',b)} className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-500 text-white text-[13px] font-semibold"><Eye size={15}/>Receipt & Review</button>
           ):tab==='inprogress'?(
             <button onClick={()=>navigate('ongoing-service',b)} className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-amber-500 text-white text-[13px] font-semibold"><Clock size={15}/>Track Job</button>
           ):(
