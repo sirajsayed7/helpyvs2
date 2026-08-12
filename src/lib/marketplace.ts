@@ -18,6 +18,7 @@ export type DayAvailability = {
   enabled: boolean
   start_time: string
   end_time: string
+  time_blocks?: { start_time: string; end_time: string }[] | null
 }
 
 export type PromotionDraft = {
@@ -42,6 +43,7 @@ export const supabase = marketplaceConfigured ? createClient(url!, anonKey!) : n
 
 const SERVICE_CACHE_KEY = 'helpy.vendor.services.v1'
 const AVAILABILITY_CACHE_KEY = 'helpy.vendor.availability.v1'
+const AVAILABILITY_BLOCKS_CACHE_KEY = 'helpy.vendor.availability.blocks.v1'
 
 export const DEFAULT_SERVICES: VendorService[] = [
   { id: 'demo-general', vendor_id: 'demo', name: 'General Cleaning', description: 'Regular home cleaning and maintenance.', category: 'Home', price: 150, duration: '2-3 hrs', image_url: null, is_active: true, bookings_count: 45 },
@@ -183,19 +185,35 @@ export async function removeVendorService(id: string): Promise<VendorService[]> 
 export async function listAvailability(): Promise<DayAvailability[]> {
   if (!supabase) return readCache(AVAILABILITY_CACHE_KEY, DEFAULT_AVAILABILITY)
   const vendorId = await ensureVendor()
-  const { data, error } = await supabase.from('vendor_availability').select('day_of_week,enabled,start_time,end_time').eq('vendor_id', vendorId)
-  if (error) throw error
-  return data?.length ? data as DayAvailability[] : DEFAULT_AVAILABILITY
+  const extended = await supabase.from('vendor_availability').select('day_of_week,enabled,start_time,end_time,time_blocks').eq('vendor_id', vendorId)
+  if (!extended.error) return extended.data?.length ? extended.data as DayAvailability[] : DEFAULT_AVAILABILITY
+
+  const missingTimeBlocks = extended.error.message?.includes('time_blocks') || extended.error.code === 'PGRST204' || extended.error.code === '42703'
+  if (!missingTimeBlocks) throw extended.error
+
+  const legacy = await supabase.from('vendor_availability').select('day_of_week,enabled,start_time,end_time').eq('vendor_id', vendorId)
+  if (legacy.error) throw legacy.error
+  const cachedBlocks = readCache<Record<number, DayAvailability['time_blocks']>>(AVAILABILITY_BLOCKS_CACHE_KEY, {})
+  return legacy.data?.length
+    ? (legacy.data as DayAvailability[]).map(day => ({ ...day, time_blocks: cachedBlocks[day.day_of_week] || null }))
+    : DEFAULT_AVAILABILITY
 }
 
 export async function saveAvailability(schedule: DayAvailability[]) {
+  writeCache(AVAILABILITY_CACHE_KEY, schedule)
+  writeCache(AVAILABILITY_BLOCKS_CACHE_KEY, Object.fromEntries(schedule.map(day => [day.day_of_week, day.time_blocks || null])))
   if (!supabase) {
-    writeCache(AVAILABILITY_CACHE_KEY, schedule)
     return
   }
   const vendorId = await ensureVendor()
   const { error } = await supabase.from('vendor_availability').upsert(schedule.map(day => ({ ...day, vendor_id: vendorId })), { onConflict: 'vendor_id,day_of_week' })
-  if (error) throw error
+  if (!error) return
+
+  const missingTimeBlocks = error.message?.includes('time_blocks') || error.code === 'PGRST204' || error.code === '42703'
+  if (!missingTimeBlocks) throw error
+  const legacySchedule = schedule.map(({ time_blocks: _timeBlocks, ...day }) => ({ ...day, vendor_id: vendorId }))
+  const legacyResult = await supabase.from('vendor_availability').upsert(legacySchedule, { onConflict: 'vendor_id,day_of_week' })
+  if (legacyResult.error) throw legacyResult.error
 }
 
 export async function publishPromotion(draft: PromotionDraft, bannerFile?: File | null) {

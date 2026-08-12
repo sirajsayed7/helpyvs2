@@ -38,8 +38,12 @@ create table if not exists public.vendor_availability (
   enabled boolean not null default true,
   start_time time not null,
   end_time time not null,
+  time_blocks jsonb,
   unique(vendor_id, day_of_week)
 );
+
+alter table public.vendor_availability
+  add column if not exists time_blocks jsonb;
 
 create table if not exists public.promotions (
   id uuid primary key default gen_random_uuid(),

@@ -7,6 +7,7 @@ The vendor and customer applications use the same Supabase project. The vendor a
 1. Create one Supabase project.
 2. In **Authentication → Providers → Anonymous**, enable anonymous sign-ins for the current prototype login flow.
 3. Open the SQL editor and run [`supabase/schema.sql`](./supabase/schema.sql).
+   - For a project created before split availability was added, also run [`supabase/availability_time_blocks.sql`](./supabase/availability_time_blocks.sql) once.
 4. Copy `.env.example` to `.env.local` in both repositories.
 5. Put the same project URL and anon key into both `.env.local` files:
 
